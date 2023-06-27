@@ -14,11 +14,15 @@
         
       </ul>
     </nav>
-    <router-view/>
+    <transition mode="out-in" enter-active-class="animate__animated animate__fadeIn" leave-active-class="animate__animated animate__fadeOut">
+      <router-view/>
+    </transition>
+    
   </div>
 </template>
 
 <style>
+@import "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css";
 *{
   width: 100%;
   margin: 0;
