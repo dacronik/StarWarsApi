@@ -9,7 +9,7 @@ import axios from "axios";
 import Card from '@/components/Card.vue'
 export default {
     name: 'personaje-view',
-    // props: {},
+    props: ['id'],
     data: function(){
         return {
             nombre:'',
@@ -20,9 +20,9 @@ export default {
         }
     },
     computed: {
-        id(){
-            return this.$route.params.id
-        },
+        // id(){
+        //     return this.$route.params.id
+        // },
     },
     methods: {
         async perStarWars(){
@@ -31,6 +31,8 @@ export default {
             this.genero = response.data.gender
             this.altura = response.data.height
             this.numPeliculas = response.data.films.length
+            
+            
         },
         
     },
