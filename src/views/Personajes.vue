@@ -11,8 +11,8 @@
                 
             </div>
             <div class="personajes-grid" v-else>
-                <div class="personajes" v-for="(item,index) in personajes" :key="item">
-                    <h3 class="nombres" @click="redirectTo(index+1)">{{item}}</h3>
+                <div class="personajes" v-for="(item) in personajes" :key="item.name">
+                    <h3 class="nombres" @click="redirectTo(item.url)">{{item.name}}</h3>
                 </div>
             </div>
         </div>
@@ -37,8 +37,11 @@ export default {
             try{
                 this.isLoading = true
                 let response = await axios.get(`https://swapi.dev/api/people?page=${this.contador}`);
-                let nombres = response.data.results.map(nombre =>nombre.name)
+                let nombres = response.data.results.map(nombre =>{
+                    return {name: nombre.name, url: nombre.url}
+                })
                 this.personajes.push(...nombres);
+
             }
             catch(error){
                 console.log(error)
@@ -53,8 +56,20 @@ export default {
             this.peticion();
             
         },
-        redirectTo(index){
-            this.$router.push(`/personajes/${index}`)
+        redirectTo(url){
+            //
+            //const url = 'https://swapi.dev/api/people/2/';
+            const regex = /\/(\d+)\/$/; 
+            const match = url.match(regex);
+
+            if (match) {
+            const numero = match[1]; 
+            this.$router.push(`/personajes/${numero}`)
+            console.log(numero); 
+            
+            } else {
+            console.log('No se encontró ningún número en la URL.');
+            }
         }
         
     },
